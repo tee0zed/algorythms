@@ -1,15 +1,31 @@
 
-def sel_sort(array, num = array.size-1)
-  smallest = array[num]
-  return array if num == -1
+def sel_sort(array, index = 0)
+  biggest = array[index]
 
-  array.slice(0, num).each do |el|
-    smallest = el if el < smallest
+  return array if index == array.size
+
+  subarr = array.slice(index, array.size)
+
+  subarr.each do |el|
+    biggest = el if el > biggest
   end
 
-  array.push(array.delete(smallest))
-  num -= 1
-  sel_sort(array, num)
+  index_on_biggest_in_array = subarr.index(biggest) + index
+
+  array.delete_at(index_on_biggest_in_array)
+  array.unshift(biggest)
+
+  index += 1
+  
+  sel_sort(array, index)
 end
 
-puts sel_sort [5, 7, 12, 77, 421, 23, 14, 42]
+10.times do 
+  arr = Array.new(rand(10..20)) { rand(0..100) }
+
+  if sel_sort(arr) == arr.sort
+    puts 'Ok'
+  else
+    puts 'Fail'
+  end
+end

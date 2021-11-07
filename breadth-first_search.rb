@@ -1,3 +1,7 @@
+def correct_item?(item)
+  item == :michael
+end
+
 def bfs(graph)
   queue = [graph.keys[0]]
   searched = []
@@ -6,7 +10,7 @@ def bfs(graph)
     item = queue.shift
 
     unless searched.include?(item)
-      if item[0] == 'm'
+      if correct_item?(item)
         return item
       else
         queue += graph[item]
@@ -16,10 +20,20 @@ def bfs(graph)
   return nil
 end
 
+graph = { 
+  bob:     [:claire, :nancy, :carl], 
+  michael: [:anna, :lisa, :bob], 
+  nancy:   [:josh, :michael],
+  carl:    [:peggy, :anna],
+  claire:  [:josh, :tom], 
+  tom:     [],
+  josh:    [], 
+  lisa:    []
+}
 
-graph = {'bob' => ['claire', 'nancy', 'carl'], 'tom' => [],
-  'claire' => ['josh', 'tom'], 'josh' => [], 'nancy' => ['josh', 'michael'],
-  'michael' => ['anna', 'lisa', 'bob'], 'carl' => ['peggy', 'anna'], 'lisa' => []}
 
-
-puts bfs(graph)
+if bfs(graph) == :michael
+  puts 'Ok'
+else
+  puts 'Fail'
+end 

@@ -1,3 +1,7 @@
+def correct_item?(item, guess)
+  item == guess
+end
+
 def binary_search(array, item)
   low_point = 0
   high_point = array.size - 1
@@ -6,7 +10,7 @@ def binary_search(array, item)
     mid = (high_point + low_point)/2
     guess = array[mid]
 
-    if guess == item
+    if correct_item?(item, guess)
       return mid
     elsif guess > item
       high_point = mid - 1
@@ -17,4 +21,14 @@ def binary_search(array, item)
   return nil
 end
 
-puts binary_search([1,2,3,4,5,8,11,123,10009,23000, 33000], 33020)
+10.times do 
+  arr = Array.new(rand(10..20)) { rand(0..100) }.sort.uniq
+
+  to_find = arr.sample
+
+  if binary_search(arr, to_find) == arr.index(to_find)
+    puts 'Ok'
+  else
+    puts 'Fail'
+  end
+end

@@ -1,22 +1,31 @@
 
 def quick_sort(array)
-
   if array.size < 2
     array
   else
+    array = array.dup  
     pivot = array.shift
-    small, big = [], []
+
+    smaller, bigger = [], []
+    
     array.each do |el|
       if el < pivot
-        small << el
+        smaller << el
       else
-        big << el
+        bigger << el
       end
     end
-    return quick_sort(small) + [pivot] + quick_sort(big)
+
+    quick_sort(smaller) + [pivot] + quick_sort(bigger)
   end
 end
 
-arr = [123313, 4, 14, 235, 23, 2, 55]
+10.times do 
+  arr = Array.new(rand(10..20)) { rand(0..100) }
 
-puts quick_sort(arr)
+  if quick_sort(arr) == arr.sort
+    puts 'Ok'
+  else
+    puts 'Fail'
+  end
+end
